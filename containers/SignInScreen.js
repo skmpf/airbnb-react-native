@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import {
   ActivityIndicator,
-  KeyboardAvoidingView,
-  StatusBar,
+  SafeAreaView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -16,14 +15,14 @@ import styles from "./components/style";
 
 export default function SignInScreen({ setToken }) {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("arno@airbnb-api.com");
-  const [password, setPassword] = useState("password01");
+  const [email, setEmail] = useState("nono@airbnb-api.com");
+  const [password, setPassword] = useState("pass");
   const [isLoading, setIsLoading] = useState(false);
 
   const SignIn = async () => {
     try {
       const response = await axios.post(
-        "https://airbnb-api.herokuapp.com/api/user/log_in",
+        "https://express-airbnb-api.herokuapp.com/user/log_in",
         {
           email,
           password
@@ -46,19 +45,18 @@ export default function SignInScreen({ setToken }) {
 
   return (
     <>
-      <View style={styles.container}>
-        <StatusBar barStyle="light-content" />
-        <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.wrapper}>
           <Ionicons name="ios-home" size={150} color="white" />
         </View>
-        <KeyboardAvoidingView
-          style={styles.container}
+        <View
+          style={styles.wrapper}
           behavior={Platform.OS === "ios" ? "padding" : null}
         >
           <View>
             <TextInput
               placeholder="Username"
-              style={[styles.txtWhite, styles.under]}
+              style={[styles.txtWhite, styles.under, styles.input]}
               onChangeText={text => {
                 setEmail(text);
               }}
@@ -66,50 +64,55 @@ export default function SignInScreen({ setToken }) {
             <TextInput
               placeholder="Password"
               secureTextEntry={true}
-              style={[styles.txtWhite, styles.under, { marginTop: 59 }]}
+              style={[
+                styles.txtWhite,
+                styles.under,
+                styles.input,
+                { marginTop: 59 }
+              ]}
               onChangeText={text => {
                 setPassword(text);
               }}
             />
-            {isLoading ? (
-              <ActivityIndicator
-                size="large"
-                color="white"
-                style={{ marginTop: 20 }}
-              />
-            ) : (
-              <TouchableOpacity
-                style={[styles.button, { marginTop: 106 }]}
-                title="Sign in"
-                onPress={async () => {
-                  setIsLoading(true);
-                  SignIn();
-                  setIsLoading(false);
-                }}
-              >
-                <Text style={[styles.txtPink, { fontSize: 24 }]}>
-                  Se connecter
-                </Text>
-              </TouchableOpacity>
-            )}
-
+          </View>
+          {isLoading ? (
+            <ActivityIndicator
+              size="large"
+              color="white"
+              style={{ marginTop: 20 }}
+            />
+          ) : (
             <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("SignUp");
+              style={[styles.button, { marginTop: 106 }]}
+              title="Sign in"
+              onPress={async () => {
+                setIsLoading(true);
+                SignIn();
+                setIsLoading(false);
               }}
             >
-              <Text
-                style={[
-                  styles.txtWhite,
-                  { marginTop: 43, textDecorationLine: "underline" }
-                ]}
-              >
-                Pas de compte ? S'inscrire
+              <Text style={[styles.txtPink, { fontSize: 24 }]}>
+                Se connecter
               </Text>
             </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </View>
+          )}
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("SignUp");
+            }}
+          >
+            <Text
+              style={[
+                styles.txtWhite,
+                { marginTop: 43, textDecorationLine: "underline" }
+              ]}
+            >
+              Pas de compte ? S'inscrire
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
     </>
   );
 }

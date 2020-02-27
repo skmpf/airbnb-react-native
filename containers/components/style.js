@@ -1,12 +1,18 @@
-import { StyleSheet } from "react-native";
+import { StatusBar, StyleSheet, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
   // MAIN
   container: {
     backgroundColor: "#F14F55",
-    flex: 1,
-    alignItems: "center",
+    flex: 1
+  },
+  wrapper: {
+    width: Dimensions.get("window").width - 80,
+    marginHorizontal: 40,
     justifyContent: "center"
+  },
+  input: {
+    width: Dimensions.get("window").width - 80
   },
   button: {
     height: 65,
@@ -36,16 +42,27 @@ const styles = StyleSheet.create({
     height: 117
   },
 
+  // HOMESCREEN
+  home: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: StatusBar.currentHeight
+  },
+  rooms: {
+    width: Dimensions.get("window").width,
+    alignItems: "center"
+  },
+
   //   CARDS
   card: {
-    width: 330,
     paddingBottom: 20,
     marginBottom: 21,
     borderBottomColor: "#BBBBBB",
     borderBottomWidth: 1
   },
   picture: {
-    width: 330,
+    width: Dimensions.get("window").width - 40,
     height: 215
   },
   avatar: {
@@ -58,11 +75,11 @@ const styles = StyleSheet.create({
     lineHeight: 45,
     textAlign: "center",
     color: "white",
-    backgroundColor: "black",
+    backgroundColor: "rgba(0,0,0,0.8)",
     width: 70,
     height: 45,
     position: "absolute",
-    bottom: 110
+    top: 160
   },
   overview: {
     flexDirection: "row",
@@ -75,7 +92,35 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10
   },
-  reviews: { marginLeft: 18, fontSize: 17, color: "#BBBBBB" }
+  reviews: { marginLeft: 18, fontSize: 17, color: "#BBBBBB" },
+
+  //   ROOM
+  room: { width: Dimensions.get("window").width - 40, marginHorizontal: 20 },
+  roomPic: {
+    width: Dimensions.get("window").width,
+    height: 244
+  },
+  roomPrice: {
+    fontSize: 18,
+    lineHeight: 45,
+    textAlign: "center",
+    color: "white",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    width: 70,
+    height: 45,
+    position: "absolute",
+    top: 190
+  },
+  roomDesc: {
+    fontSize: 16,
+    marginTop: 36
+  },
+  map: {
+    width: Dimensions.get("window").width - 40,
+    paddingHorizontal: 20,
+    height: 150,
+    marginTop: 35
+  }
 });
 
 export default styles;

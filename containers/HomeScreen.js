@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/core";
-import {
-  ActivityIndicator,
-  Button,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
+import { ActivityIndicator, FlatList, SafeAreaView, View } from "react-native";
 import axios from "axios";
 
 import Card from "./components/Card";
+import styles from "./components/style";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -29,50 +24,40 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View>
-          {isLoading ? (
-            <ActivityIndicator
-              size="large"
-              color="white"
-              style={{ marginTop: 20 }}
-            />
-          ) : (
-            <>
-              {data.map(room => {
-                return (
+    <SafeAreaView style={styles.home}>
+      <View>
+        {isLoading ? (
+          <ActivityIndicator
+            size="large"
+            color="white"
+            style={{ marginTop: 20 }}
+          />
+        ) : (
+          <FlatList
+            contentContainerStyle={styles.rooms}
+            data={data}
+            keyExtractor={item => item._id}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("Room", { roomId: item._id });
+                  }}
+                >
                   <Card
-                    key={room._id}
-                    data={data}
-                    picture={{ uri: room.photos[0] }}
-                    price={room.price}
-                    title={room.title}
-                    rating={room.ratingValue}
-                    reviews={room.reviews}
-                    avatar={{ uri: room.user.account.photos[0] }}
+                    picture={item.photos[0]}
+                    price={item.price}
+                    title={item.title}
+                    rating={item.ratingValue}
+                    reviews={item.reviews}
+                    avatar={item.user.account.photos[0]}
                   />
-                );
-              })}
-            </>
-          )}
-        </View>
-
-        <Button
-          title="Go to Profile"
-          onPress={() => {
-            navigation.navigate("Profile", { userId: 123 });
-          }}
-        />
+                </TouchableOpacity>
+              );
+            }}
+          />
+        )}
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    alignItems: "center",
-    marginHorizontal: 27
-  }
-});
