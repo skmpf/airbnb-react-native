@@ -2313,6 +2313,13 @@ expo-font@~8.0.0:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-image-picker@~8.0.1:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-8.0.2.tgz#14139f1d73793ae7fba6fe3cf34e1dc91baf402a"
+  integrity sha512-oa0/JoKIv5mxyadpVqiQ+BXak2s7QS3+Rurj1j/gL5GGFmb3cDJWbGHxvtrEXEccv8812JAp5BfBRqfzlW1gMQ==
+  dependencies:
+    expo-permissions "*"
+
 expo-keep-awake@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-8.0.0.tgz#f9200a876a5db86e3f0aec8843428a918cdc08d6"
@@ -2330,7 +2337,7 @@ expo-location@~8.0.0:
   dependencies:
     invariant "^2.2.4"
 
-expo-permissions@~8.0.0:
+expo-permissions@*, expo-permissions@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-8.0.0.tgz#5a45e8451dd7ff37c9e6ce5e2447818372547813"
   integrity sha512-GHTRmwh1rd1b0FcibluPFu93NNQyl9b1anBBDVPmomoo9Prz7kDcO5p2hFqM99r896yvAUSe0fPloPKUq4g/1A==
@@ -4314,10 +4321,18 @@ react-native-gesture-handler@~1.5.0:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-iphone-x-helper@^1.2.1:
+react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
+
+react-native-keyboard-aware-scroll-view@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.9.1.tgz#9e54b565a5f19b30bed12221d48921781f7630af"
+  integrity sha512-tBZ8rmjELN0F6t5UBp5CW3NYmZXgVnJSzVCssv/OqG2t6kiB+OUTqxNvUP24K+HARX4H+XaW0aEJSFQkQCv6KA==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-iphone-x-helper "^1.0.3"
 
 react-native-maps@0.26.1:
   version "0.26.1"

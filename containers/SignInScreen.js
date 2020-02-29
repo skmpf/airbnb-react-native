@@ -10,13 +10,14 @@ import {
 } from "react-native";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import styles from "./components/style";
 
-export default function SignInScreen({ setToken }) {
+export default function SignInScreen({ setToken, setId }) {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("nono@airbnb-api.com");
-  const [password, setPassword] = useState("pass");
+  const [email, setEmail] = useState("seb@seb");
+  const [password, setPassword] = useState("seb");
   const [isLoading, setIsLoading] = useState(false);
 
   const SignIn = async () => {
@@ -34,7 +35,9 @@ export default function SignInScreen({ setToken }) {
         }
       );
       if (response.data.token) {
+        console.log(response.data);
         setToken(response.data.token);
+        setId(response.data.id);
       } else {
         alert(error.message);
       }
@@ -49,12 +52,13 @@ export default function SignInScreen({ setToken }) {
         <View style={styles.wrapper}>
           <Ionicons name="ios-home" size={150} color="white" />
         </View>
-        <View
-          style={styles.wrapper}
+        <KeyboardAwareScrollView
+          contentContainerStyle={styles.wrapper}
           behavior={Platform.OS === "ios" ? "padding" : null}
         >
           <View>
             <TextInput
+              autoCapitalize="none"
               placeholder="Username"
               style={[styles.txtWhite, styles.under, styles.input]}
               onChangeText={text => {
@@ -111,7 +115,7 @@ export default function SignInScreen({ setToken }) {
               Pas de compte ? S'inscrire
             </Text>
           </TouchableOpacity>
-        </View>
+        </KeyboardAwareScrollView>
       </SafeAreaView>
     </>
   );

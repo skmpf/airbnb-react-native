@@ -9,6 +9,7 @@ import {
   View
 } from "react-native";
 import axios from "axios";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import styles from "./components/style";
 
@@ -55,7 +56,7 @@ export default function SignUpScreen({ setToken }) {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : null}
     >
-      <View style={styles.wrapper}>
+      <KeyboardAwareScrollView contentContainerStyle={styles.wrapper}>
         <Text style={[styles.txtWhite, { fontSize: 24 }]}>
           Rejoignez-nous !
         </Text>
@@ -141,7 +142,7 @@ export default function SignUpScreen({ setToken }) {
             Déjà un compte ? Se connecter
           </Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }

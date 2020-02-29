@@ -4,12 +4,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, Entypo } from "@expo/vector-icons";
-
 import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
-import SettingsScreen from "./containers/SettingsScreen";
 import AroundMe from "./containers/AroundMe";
 import Room from "./containers/Room";
 
@@ -19,6 +17,7 @@ const Stack = createStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const setToken = async token => {
     if (token) {
@@ -26,8 +25,16 @@ export default function App() {
     } else {
       AsyncStorage.removeItem("userToken");
     }
-
     setUserToken(token);
+  };
+
+  const setId = async id => {
+    if (id) {
+      AsyncStorage.setItem("userId", id);
+    } else {
+      AsyncStorage.removeItem("userId");
+    }
+    setUserId(id);
   };
 
   useEffect(() => {
@@ -35,13 +42,13 @@ export default function App() {
     const bootstrapAsync = async () => {
       // We should also handle error for production apps
       const userToken = await AsyncStorage.getItem("userToken");
-
+      const userId = await AsyncStorage.getItem("userId");
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
       setIsLoading(false);
       setUserToken(userToken);
+      setUserId(userId);
     };
-
     bootstrapAsync();
   }, []);
 
@@ -55,7 +62,7 @@ export default function App() {
             name="SignIn"
             options={{ header: () => null, animationEnabled: false }}
           >
-            {() => <SignInScreen setToken={setToken} />}
+            {() => <SignInScreen setToken={setToken} setId={setId} />}
           </Stack.Screen>
           <Stack.Screen
             name="SignUp"
@@ -73,7 +80,14 @@ export default function App() {
           >
             {() => (
               <Tab.Navigator>
-                <Tab.Screen name="Home">
+                <Tab.Screen
+                  name="Home"
+                  options={{
+                    tabBarIcon: ({ color, size }) => {
+                      <Ionicons name={"ios-home"} color={color} size={size} />;
+                    }
+                  }}
+                >
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen name="Home">
@@ -83,7 +97,18 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
-                <Tab.Screen name="Around me">
+                <Tab.Screen
+                  name="Around me"
+                  options={{
+                    tabBarIcon: ({ color, size }) => {
+                      <Entypo
+                        name={"location-pin"}
+                        color={color}
+                        size={size}
+                      />;
+                    }
+                  }}
+                >
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen name="Around me">
@@ -92,14 +117,28 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
-                <Tab.Screen name="Settings">
+                <Tab.Screen name="Profile">
                   {() => (
                     <Stack.Navigator>
-                      <Stack.Screen name="Settings">
-                        {() => <SettingsScreen setToken={setToken} />}
-                      </Stack.Screen>
-                      <Stack.Screen name="Profile">
-                        {() => <ProfileScreen />}
+                      <Stack.Screen
+                        name="Profile"
+                        options={{
+                          tabBarIcon: ({ color, size }) => {
+                            <Ionicons
+                              name={"ios-person"}
+                              color={color}
+                              size={size}
+                            />;
+                          }
+                        }}
+                      >
+                        {() => (
+                          <ProfileScreen
+                            userToken={userToken}
+                            setToken={setToken}
+                            userId={userId}
+                          />
+                        )}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

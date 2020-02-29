@@ -9,7 +9,9 @@ const styles = StyleSheet.create({
   wrapper: {
     width: Dimensions.get("window").width - 80,
     marginHorizontal: 40,
-    justifyContent: "center"
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1
   },
   input: {
     width: Dimensions.get("window").width - 80
@@ -18,6 +20,8 @@ const styles = StyleSheet.create({
     height: 65,
     width: 190,
     borderRadius: 30,
+    // borderEndColor: "#F14F55",
+    // borderColor: "#F14F55",
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center"
@@ -38,7 +42,7 @@ const styles = StyleSheet.create({
   txtBox: {
     borderColor: "white",
     borderWidth: 1,
-    width: 318,
+    width: Dimensions.get("window").width - 80,
     height: 117
   },
 
@@ -120,6 +124,38 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     height: 150,
     marginTop: 35
+  },
+
+  // PROFILE
+  userAvatar: {
+    width: 140,
+    height: 150,
+    marginTop: 20
+  },
+  txtBlack: {
+    color: "black",
+    fontSize: 16
+  },
+  underProf: {
+    paddingBottom: 12,
+    borderBottomColor: "#F14F55",
+    borderBottomWidth: 1
+  },
+  txtBox: {
+    borderColor: "#F14F55",
+    borderWidth: 1,
+    width: Dimensions.get("window").width - 80,
+    height: 117
+  },
+  btnSignout: {
+    height: 65,
+    width: 190,
+    borderRadius: 30,
+    // borderEndColor: "#F14F55",
+    // borderColor: "#F14F55",
+    backgroundColor: "#F14F55",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
