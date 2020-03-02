@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
+  ActivityIndicator,
+  AsyncStorage,
   Image,
   TextInput,
   Text,
   TouchableOpacity,
-  View,
-  ActivityIndicator
+  View
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
@@ -14,7 +15,7 @@ import * as Permissions from "expo-permissions";
 
 import styles from "./components/style";
 
-export default function ProfileScreen({ userToken, setToken, userId }) {
+export default function ProfileScreen({ setToken, setId }) {
   const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,11 +26,13 @@ export default function ProfileScreen({ userToken, setToken, userId }) {
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = await AsyncStorage.getItem("userToken");
+      const id = await AsyncStorage.getItem("userId");
       const response = await axios.get(
-        `https://express-airbnb-api.herokuapp.com/user/${userId}`,
+        `https://express-airbnb-api.herokuapp.com/user/${id}`,
         {
           headers: {
-            Authorization: "Bearer " + userToken
+            Authorization: "Bearer " + token
           }
         }
       );
@@ -38,7 +41,8 @@ export default function ProfileScreen({ userToken, setToken, userId }) {
       setName(response.data.name);
       setDescription(response.data.description);
       setUsername(response.data.username);
-      console.log(userId);
+      console.log(id);
+      console.log(token);
 
       setIsLoading(false);
     };
@@ -46,8 +50,10 @@ export default function ProfileScreen({ userToken, setToken, userId }) {
   }, []);
 
   const updateUser = async () => {
+    const token = await AsyncStorage.getItem("userToken");
+    const id = await AsyncStorage.getItem("userId");
     const sendData = await axios.put(
-      `https://express-airbnb-api.herokuapp.com/user/update/${userId}`,
+      `https://express-airbnb-api.herokuapp.com/user/update/${id}`,
       {
         email,
         username,
@@ -56,13 +62,15 @@ export default function ProfileScreen({ userToken, setToken, userId }) {
       },
       {
         headers: {
-          Authorization: "Bearer " + userToken
+          Authorization: "Bearer " + token
         }
       }
     );
   };
 
   const updatePicture = async () => {
+    const token = await AsyncStorage.getItem("userToken");
+    const id = await AsyncStorage.getItem("userId");
     // Permissions
     const cameraPerm = await Permissions.askAsync(Permissions.CAMERA);
     const cameraRollPerm = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -93,7 +101,7 @@ export default function ProfileScreen({ userToken, setToken, userId }) {
         method: "PUT",
         body: formData,
         headers: {
-          Authorization: "Bearer " + userToken,
+          Authorization: "Bearer " + token,
           Accept: "application/json",
           "Content-Type": "multipart/form-data"
         }
@@ -101,10 +109,11 @@ export default function ProfileScreen({ userToken, setToken, userId }) {
 
       try {
         console.log(1);
-        console.log(userId);
-
+        console.log(formData);
+        console.log(id);
+        console.log(token);
         const sendPicture = await axios.put(
-          `https://express-airbnb-api.herokuapp.com/user/upload_picture/${userId}`,
+          `https://express-airbnb-api.herokuapp.com/user/upload_picture/${id}`,
           options
         );
         console.log(2);
@@ -192,6 +201,7 @@ export default function ProfileScreen({ userToken, setToken, userId }) {
         style={[styles.btnSignout, { marginTop: 19 }]}
         title="Se déconnecter"
         onPress={async () => {
+          setId(null);
           setToken(null);
         }}
       >

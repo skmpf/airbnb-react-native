@@ -13,7 +13,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 import styles from "./components/style";
 
-export default function SignUpScreen({ setToken }) {
+export default function SignUpScreen({ setToken, setId }) {
   const navigation = useNavigation();
 
   const [email, setEmail] = useState("");
@@ -43,6 +43,8 @@ export default function SignUpScreen({ setToken }) {
           }
         );
         setToken(response.data.token);
+        setId(response.data.id);
+        setImmediate(response.data.id);
       } else {
         alert("Les mots de passe doivent être identique");
       }

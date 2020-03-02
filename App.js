@@ -68,7 +68,7 @@ export default function App() {
             name="SignUp"
             options={{ header: () => null, animationEnabled: false }}
           >
-            {() => <SignUpScreen setToken={setToken} />}
+            {() => <SignUpScreen setToken={setToken} setId={setId} />}
           </Stack.Screen>
         </Stack.Navigator>
       ) : (
@@ -133,11 +133,7 @@ export default function App() {
                         }}
                       >
                         {() => (
-                          <ProfileScreen
-                            userToken={userToken}
-                            setToken={setToken}
-                            userId={userId}
-                          />
+                          <ProfileScreen setId={setId} setToken={setToken} />
                         )}
                       </Stack.Screen>
                     </Stack.Navigator>
