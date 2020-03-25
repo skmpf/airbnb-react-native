@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Dimensions,
   Image,
   SafeAreaView,
+  ScrollView,
   Text,
   View
 } from "react-native";
@@ -10,6 +12,7 @@ import { useRoute } from "@react-navigation/core";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import MapView from "react-native-maps";
+import Carousel from "react-native-snap-carousel";
 
 import styles from "./components/style";
 
@@ -18,6 +21,12 @@ function Room() {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [stars, setStars] = useState();
+
+  const _renderItem = ({ item, index }) => {
+    return <Image style={styles.roomPic} source={{ uri: item }} />;
+  };
+
+  const deviceWidth = Dimensions.get("window").width;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +66,7 @@ function Room() {
   }, []);
 
   return (
-    <>
+    <SafeAreaView>
       {isLoading ? (
         <ActivityIndicator
           size="large"
@@ -65,8 +74,17 @@ function Room() {
           style={{ marginTop: 20 }}
         />
       ) : (
-        <SafeAreaView style={[styles.backWhite, { height: "100%" }]}>
-          <Image source={{ uri: data.photos[0] }} style={styles.roomPic} />
+        <ScrollView style={[styles.backWhite, { height: "100%" }]}>
+          <Carousel
+            ref={c => {
+              let _carousel = c;
+            }}
+            data={data.photos}
+            renderItem={_renderItem}
+            sliderWidth={deviceWidth}
+            itemWidth={deviceWidth}
+            loop={true}
+          />
           <Text style={styles.roomPrice}>{data.price} €</Text>
           <View style={styles.room}>
             <View style={styles.overview}>
@@ -107,9 +125,9 @@ function Room() {
               />
             </MapView>
           </View>
-        </SafeAreaView>
+        </ScrollView>
       )}
-    </>
+    </SafeAreaView>
   );
 }
 

@@ -6,6 +6,7 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  ScrollView,
   View
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -119,7 +120,7 @@ export default function ProfileScreen({ setToken, setId }) {
           style={{ height: "100%" }}
         />
       ) : (
-        <View style={{ alignItems: "center" }}>
+        <ScrollView contentContainerStyle={{ alignItems: "center" }}>
           <TouchableOpacity
             onPress={() => {
               updatePicture();
@@ -181,18 +182,18 @@ export default function ProfileScreen({ setToken, setId }) {
               Mettre à jour
             </Text>
           </TouchableOpacity>
-        </View>
+          <TouchableOpacity
+            style={[styles.btnSignout, { marginTop: 19 }]}
+            title="Se déconnecter"
+            onPress={async () => {
+              setId(null);
+              setToken(null);
+            }}
+          >
+            <Text style={{ color: "white", fontSize: 24 }}>Se déconnecter</Text>
+          </TouchableOpacity>
+        </ScrollView>
       )}
-      <TouchableOpacity
-        style={[styles.btnSignout, { marginTop: 19 }]}
-        title="Se déconnecter"
-        onPress={async () => {
-          setId(null);
-          setToken(null);
-        }}
-      >
-        <Text style={{ color: "white", fontSize: 24 }}>Se déconnecter</Text>
-      </TouchableOpacity>
     </View>
   );
 }
