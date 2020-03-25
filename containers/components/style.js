@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
     height: 65,
     width: 190,
     borderRadius: 30,
-    // borderEndColor: "#F14F55",
-    // borderColor: "#F14F55",
+    borderWidth: 1,
+    borderColor: "#F14F55",
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center"
@@ -43,7 +43,12 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 1,
     width: Dimensions.get("window").width - 80,
-    height: 117
+    height: 117,
+    paddingHorizontal: 15,
+    paddingTop: 15
+  },
+  backWhite: {
+    backgroundColor: "white"
   },
 
   // HOMESCREEN
@@ -129,30 +134,33 @@ const styles = StyleSheet.create({
   // PROFILE
   userAvatar: {
     width: 140,
-    height: 150,
-    marginTop: 20
+    height: 140,
+    marginTop: 20,
+    borderRadius: 70,
+    borderWidth: 2,
+    borderColor: "#F35960"
   },
   txtBlack: {
     color: "black",
     fontSize: 16
+  },
+  profileBox: {
+    borderColor: "#F35960",
+    borderWidth: 1,
+    width: Dimensions.get("window").width - 80,
+    height: 117,
+    paddingHorizontal: 15,
+    paddingTop: 15
   },
   underProf: {
     paddingBottom: 12,
     borderBottomColor: "#F14F55",
     borderBottomWidth: 1
   },
-  txtBox: {
-    borderColor: "#F14F55",
-    borderWidth: 1,
-    width: Dimensions.get("window").width - 80,
-    height: 117
-  },
   btnSignout: {
     height: 65,
     width: 190,
     borderRadius: 30,
-    // borderEndColor: "#F14F55",
-    // borderColor: "#F14F55",
     backgroundColor: "#F14F55",
     alignItems: "center",
     justifyContent: "center"

@@ -66,6 +66,8 @@ export default function SignUpScreen({ setToken, setId }) {
         <View style={styles.input}>
           <TextInput
             placeholder="email"
+            placeholderTextColor="#E1E1E1"
+            autoCapitalize="none"
             style={[styles.under, styles.txtWhite, { marginTop: 60 }]}
             onChangeText={text => {
               setEmail(text);
@@ -73,6 +75,8 @@ export default function SignUpScreen({ setToken, setId }) {
           />
           <TextInput
             placeholder="username"
+            placeholderTextColor="#E1E1E1"
+            autoCapitalize="none"
             style={[styles.under, styles.txtWhite, { marginTop: 36 }]}
             onChangeText={text => {
               setUsername(text);
@@ -80,6 +84,7 @@ export default function SignUpScreen({ setToken, setId }) {
           />
           <TextInput
             placeholder="name"
+            placeholderTextColor="#E1E1E1"
             style={[styles.under, styles.txtWhite, { marginTop: 24 }]}
             onChangeText={text => {
               setName(text);
@@ -87,6 +92,7 @@ export default function SignUpScreen({ setToken, setId }) {
           />
           <TextInput
             placeholder="présentez-vous en quelques mots..."
+            placeholderTextColor="#E1E1E1"
             multiline={true}
             style={[styles.txtWhite, styles.txtBox, { marginTop: 29 }]}
             onChangeText={text => {
@@ -95,6 +101,7 @@ export default function SignUpScreen({ setToken, setId }) {
           ></TextInput>
           <TextInput
             placeholder="mot de passe"
+            placeholderTextColor="#E1E1E1"
             secureTextEntry={true}
             style={[styles.under, styles.txtWhite, { marginTop: 35 }]}
             onChangeText={text => {
@@ -103,6 +110,7 @@ export default function SignUpScreen({ setToken, setId }) {
           />
           <TextInput
             placeholder="confirmer le mot de passe"
+            placeholderTextColor="#E1E1E1"
             secureTextEntry={true}
             style={[styles.under, styles.txtWhite, { marginTop: 36 }]}
             onChangeText={text => {
@@ -113,7 +121,7 @@ export default function SignUpScreen({ setToken, setId }) {
         {isLoading ? (
           <ActivityIndicator
             size="large"
-            color="white"
+            color="#F1485C"
             style={{ marginTop: 20 }}
           />
         ) : (

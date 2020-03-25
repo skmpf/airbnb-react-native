@@ -24,13 +24,13 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.home}>
+    <SafeAreaView style={(styles.home, styles.backWhite)}>
       <View>
         {isLoading ? (
           <ActivityIndicator
             size="large"
-            color="white"
-            style={{ marginTop: 20 }}
+            color="#F1485C"
+            style={[{ height: "100%" }, styles.backWhite]}
           />
         ) : (
           <FlatList

@@ -16,8 +16,8 @@ import styles from "./components/style";
 
 export default function SignInScreen({ setToken, setId }) {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("seb@seb");
-  const [password, setPassword] = useState("seb");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
   const SignIn = async () => {
@@ -35,7 +35,6 @@ export default function SignInScreen({ setToken, setId }) {
         }
       );
       if (response.data.token) {
-        console.log(response.data);
         setToken(response.data.token);
         setId(response.data.id);
       } else {
@@ -60,6 +59,7 @@ export default function SignInScreen({ setToken, setId }) {
             <TextInput
               autoCapitalize="none"
               placeholder="Username"
+              placeholderTextColor="#E1E1E1"
               style={[styles.txtWhite, styles.under, styles.input]}
               onChangeText={text => {
                 setEmail(text);
@@ -67,6 +67,7 @@ export default function SignInScreen({ setToken, setId }) {
             />
             <TextInput
               placeholder="Password"
+              placeholderTextColor="#E1E1E1"
               secureTextEntry={true}
               style={[
                 styles.txtWhite,
@@ -82,7 +83,7 @@ export default function SignInScreen({ setToken, setId }) {
           {isLoading ? (
             <ActivityIndicator
               size="large"
-              color="white"
+              color="#F1485C"
               style={{ marginTop: 20 }}
             />
           ) : (

@@ -3,7 +3,7 @@ import { AsyncStorage, StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, Entypo } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
@@ -79,57 +79,104 @@ export default function App() {
             options={{ header: () => null, animationEnabled: false }}
           >
             {() => (
-              <Tab.Navigator>
+              <Tab.Navigator
+                tabBarOptions={{
+                  activeTintColor: "black",
+                  inactiveTintColor: "white",
+                  style: {
+                    backgroundColor: "#F1485C"
+                  }
+                }}
+              >
                 <Tab.Screen
                   name="Home"
                   options={{
-                    tabBarIcon: ({ color, size }) => {
-                      <Ionicons name={"ios-home"} color={color} size={size} />;
-                    }
+                    tabBarLabel: "Home",
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons name={"ios-home"} size={size} color={color} />
+                    )
                   }}
                 >
                   {() => (
                     <Stack.Navigator>
-                      <Stack.Screen name="Home">
+                      <Stack.Screen
+                        name="Home"
+                        options={{
+                          title: "Home",
+                          tabBarLabel: "Home",
+                          headerStyle: { backgroundColor: "#F1485C" },
+                          headerTitleStyle: { color: "white" },
+                          headerTitleAlign: "center"
+                        }}
+                      >
                         {() => <HomeScreen />}
                       </Stack.Screen>
-                      <Stack.Screen name="Room">{() => <Room />}</Stack.Screen>
+                      <Stack.Screen
+                        name="Room"
+                        options={{
+                          headerBackImage: () => (
+                            <Ionicons
+                              style={{ marginLeft: 20 }}
+                              name={"ios-arrow-back"}
+                              size={30}
+                              color={"white"}
+                            />
+                          ),
+                          headerBackTitleVisible: false,
+                          title: "Room",
+                          headerStyle: { backgroundColor: "#F1485C" },
+                          headerTitleStyle: { color: "white" },
+                          headerTitleAlign: "center"
+                        }}
+                      >
+                        {() => <Room />}
+                      </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
                 <Tab.Screen
                   name="Around me"
                   options={{
-                    tabBarIcon: ({ color, size }) => {
-                      <Entypo
-                        name={"location-pin"}
-                        color={color}
-                        size={size}
-                      />;
-                    }
+                    tabBarLabel: "Around Me",
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons name={"ios-pin"} size={size} color={color} />
+                    )
                   }}
                 >
                   {() => (
                     <Stack.Navigator>
-                      <Stack.Screen name="Around me">
+                      <Stack.Screen
+                        name="Around me"
+                        options={{
+                          title: "Around Me",
+                          headerStyle: { backgroundColor: "#F1485C" },
+                          headerTitleStyle: { color: "white" },
+                          headerTitleAlign: "center"
+                        }}
+                      >
                         {() => <AroundMe />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
-                <Tab.Screen name="Profile">
+                <Tab.Screen
+                  name="Profile"
+                  options={{
+                    tabBarLabel: "Profile",
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons name={"ios-person"} size={size} color={color} />
+                    )
+                  }}
+                >
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Profile"
                         options={{
-                          tabBarIcon: ({ color, size }) => {
-                            <Ionicons
-                              name={"ios-person"}
-                              color={color}
-                              size={size}
-                            />;
-                          }
+                          title: "Profile",
+                          headerStyle: { backgroundColor: "#F1485C" },
+                          headerTitleStyle: { color: "white" },
+                          headerTitleAlign: "center"
                         }}
                       >
                         {() => (

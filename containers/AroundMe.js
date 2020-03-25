@@ -4,6 +4,7 @@ import MapView, { Callout } from "react-native-maps";
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/core";
 
 import styles from "./components/style";
 
@@ -11,6 +12,7 @@ function AroundMe() {
   const [location, setLocation] = useState();
   const [rooms, setRooms] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const navigation = useNavigation();
 
   // ask for location permission and store in state
   const getLocationAsync = useCallback(async () => {
@@ -45,6 +47,9 @@ function AroundMe() {
       {isLoading === false ? (
         <MapView
           style={{ flex: 1 }}
+          showsUserLocation={true}
+          followUserLocation={true}
+          zoomEnabled={true}
           initialRegion={{
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
@@ -63,7 +68,11 @@ function AroundMe() {
                 title={room.title}
                 description={room.description}
               >
-                <Callout>
+                <Callout
+                  onPress={() =>
+                    navigation.navigate("Room", { roomId: room._id })
+                  }
+                >
                   <Text>{room.title}</Text>
                 </Callout>
               </MapView.Marker>

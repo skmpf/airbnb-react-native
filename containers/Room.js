@@ -54,7 +54,6 @@ function Room() {
       setIsLoading(false);
     };
     fetchData();
-    console.log(data);
   }, []);
 
   return (
@@ -62,11 +61,11 @@ function Room() {
       {isLoading ? (
         <ActivityIndicator
           size="large"
-          color="white"
+          color="#F1485C"
           style={{ marginTop: 20 }}
         />
       ) : (
-        <SafeAreaView>
+        <SafeAreaView style={[styles.backWhite, { height: "100%" }]}>
           <Image source={{ uri: data.photos[0] }} style={styles.roomPic} />
           <Text style={styles.roomPrice}>{data.price} €</Text>
           <View style={styles.room}>

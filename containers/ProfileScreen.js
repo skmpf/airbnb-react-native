@@ -41,9 +41,6 @@ export default function ProfileScreen({ setToken, setId }) {
       setName(response.data.name);
       setDescription(response.data.description);
       setUsername(response.data.username);
-      console.log(id);
-      console.log(token);
-
       setIsLoading(false);
     };
     fetchData();
@@ -97,42 +94,29 @@ export default function ProfileScreen({ setToken, setId }) {
         type: `image/${fileType}`
       });
 
-      const options = {
-        method: "PUT",
-        body: formData,
-        headers: {
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-          "Content-Type": "multipart/form-data"
-        }
-      };
-
       try {
-        console.log(1);
-        console.log(formData);
-        console.log(id);
-        console.log(token);
         const sendPicture = await axios.put(
           `https://express-airbnb-api.herokuapp.com/user/upload_picture/${id}`,
-          options
+          formData,
+          {
+            headers: {
+              Authorization: "Bearer " + token
+            }
+          }
         );
-        console.log(2);
-        setUser(sendPicture.data);
-        console.log(sendPicture.data);
       } catch (error) {
-        console.log(3);
         alert(error.message);
       }
     }
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center" }}>
+    <View style={[{ flex: 1, alignItems: "center" }, styles.backWhite]}>
       {isLoading ? (
         <ActivityIndicator
           size="large"
-          color="white"
-          style={{ marginTop: 20 }}
+          color="#F1485C"
+          style={{ height: "100%" }}
         />
       ) : (
         <View style={{ alignItems: "center" }}>
@@ -156,7 +140,7 @@ export default function ProfileScreen({ setToken, setId }) {
               value={username}
               style={[styles.underProf, styles.txtBlack, { marginTop: 21 }]}
               onChangeText={text => {
-                setUser(text);
+                setUsername(text);
               }}
             />
             <TextInput
@@ -176,7 +160,9 @@ export default function ProfileScreen({ setToken, setId }) {
             <TextInput
               value={description}
               multiline={true}
-              style={[styles.txtBlack, styles.txtBox, { marginTop: 36 }]}
+              numberOfLines={8}
+              maxLength={200}
+              style={[styles.txtBlack, styles.profileBox, { marginTop: 36 }]}
               onChangeText={text => {
                 setDescription(text);
               }}
