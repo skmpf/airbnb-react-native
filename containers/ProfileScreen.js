@@ -7,12 +7,14 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  View
+  View,
+  Alert
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 
 import styles from "./components/style";
 
@@ -25,25 +27,28 @@ export default function ProfileScreen({ setToken, setId }) {
   const [name, setName] = useState();
   const [description, setDescription] = useState();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = await AsyncStorage.getItem("userToken");
-      const id = await AsyncStorage.getItem("userId");
-      const response = await axios.get(
-        `https://express-airbnb-api.herokuapp.com/user/${id}`,
-        {
-          headers: {
-            Authorization: "Bearer " + token
-          }
+  const { showActionSheetWithOptions } = useActionSheet();
+
+  const fetchData = async () => {
+    const token = await AsyncStorage.getItem("userToken");
+    const id = await AsyncStorage.getItem("userId");
+    const response = await axios.get(
+      `https://express-airbnb-api.herokuapp.com/user/${id}`,
+      {
+        headers: {
+          Authorization: "Bearer " + token
         }
-      );
-      setUser(response.data);
-      setEmail(response.data.email);
-      setName(response.data.name);
-      setDescription(response.data.description);
-      setUsername(response.data.username);
-      setIsLoading(false);
-    };
+      }
+    );
+    setUser(response.data);
+    setEmail(response.data.email);
+    setName(response.data.name);
+    setDescription(response.data.description);
+    setUsername(response.data.username);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -66,48 +71,88 @@ export default function ProfileScreen({ setToken, setId }) {
     );
   };
 
-  const updatePicture = async () => {
+  const handleImagePicked = useCallback(async pickerResult => {
     const token = await AsyncStorage.getItem("userToken");
     const id = await AsyncStorage.getItem("userId");
-    // Permissions
+
+    // Send the file
+    const uri = pickerResult.uri;
+    const uriParts = uri.split(".");
+    const fileType = uriParts[uriParts.length - 1];
+    const formData = new FormData();
+
+    formData.append("photo", {
+      uri,
+      name: `photo.${fileType}`,
+      type: `image/${fileType}`
+    });
+
+    try {
+      const sendPicture = await axios.put(
+        `https://express-airbnb-api.herokuapp.com/user/upload_picture/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        }
+      );
+      fetchData();
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+
+  const _onOpenActionSheet = () => {
+    const options = ["Prendre une photo", "Bibliothèque photo", "Annuler"];
+    const cancelButtonIndex = 2;
+
+    showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex
+      },
+      buttonIndex => {
+        // Action depending on the button index selected
+        if (buttonIndex === 0) {
+          // take a picture with camera
+          takePicture();
+        }
+        if (buttonIndex === 1) {
+          // get a photo from library
+          getFromLibrary();
+        }
+      }
+    );
+  };
+
+  const takePicture = async () => {
     const cameraPerm = await Permissions.askAsync(Permissions.CAMERA);
     const cameraRollPerm = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-
-    // Chose camera or camera roll
+    // action only if user allows permission to camera AND camera roll
     if (
       cameraPerm.status === "granted" &&
       cameraRollPerm.status === "granted"
     ) {
+      const pickerResult = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        aspect: [1, 1]
+      });
+      // console.log(pickerResult);
+      handleImagePicked(pickerResult);
+    }
+  };
+
+  const getFromLibrary = async () => {
+    const cameraRollPerm = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    // action only if user allows permission to camera roll
+    if (cameraRollPerm.status === "granted") {
       const pickerResult = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
-        aspect: [4, 3]
+        aspect: [1, 1]
       });
-
-      // Send the file
-      const uri = pickerResult.uri;
-      const uriParts = uri.split(".");
-      const fileType = uriParts[uriParts.length - 1];
-      const formData = new FormData();
-
-      formData.append("photo", {
-        uri,
-        name: `photo.${fileType}`,
-        type: `image/${fileType}`
-      });
-
-      try {
-        const sendPicture = await axios.put(
-          `https://express-airbnb-api.herokuapp.com/user/upload_picture/${id}`,
-          formData,
-          {
-            headers: {
-              Authorization: "Bearer " + token
-            }
-          }
-        );
-      } catch (error) {
-        alert(error.message);
-      }
+      // console.log(pickerResult);
+      handleImagePicked(pickerResult);
     }
   };
 
@@ -123,7 +168,8 @@ export default function ProfileScreen({ setToken, setId }) {
         <ScrollView contentContainerStyle={{ alignItems: "center" }}>
           <TouchableOpacity
             onPress={() => {
-              updatePicture();
+              // _onOpenActionSheet();
+              getFromLibrary();
             }}
           >
             {user.photo && user.photo.length > 0 ? (

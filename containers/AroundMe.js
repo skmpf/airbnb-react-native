@@ -65,8 +65,6 @@ function AroundMe() {
                   latitude: room.loc[1],
                   longitude: room.loc[0]
                 }}
-                title={room.title}
-                description={room.description}
               >
                 <Callout
                   onPress={() =>
