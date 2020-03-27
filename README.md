@@ -12,7 +12,7 @@
 ## Overview
 
 A replica of Airbnb mobile application made in React Native / Expo.
-6 screens are availables : Login, Signup, Home, Room, Around Me and Profile.
+6 screens are availables: Login, Signup, Home, Room, Around Me and Profile.
 
 ## Screenshots
 
@@ -32,26 +32,26 @@ A replica of Airbnb mobile application made in React Native / Expo.
 
 ## Installation and usage
 
-Be sure, you have installed all dependencies and applications to run React Native project on your computer : [Getting Started with React Native](https://facebook.github.io/react-native/docs/getting-started).
+Be sure, you have installed all dependencies and applications to run React Native project on your computer: [Getting Started with React Native](https://facebook.github.io/react-native/docs/getting-started).
 
 This project has been optimized for iOS but has not been tested in Android version. Android might have serious UI issues.
 
 ### Running the project
 
-Clone this repository :
+Clone this repository:
 
 ```
 git clone https://github.com/sebkpf/airbnb-react-native.git
 cd airbnb-react-native
 ```
 
-Install packages :
+Install packages:
 
 ```
 npm install
 ```
 
-When installation is complete, run with version of your choice :
+When installation is complete, run with version of your choice:
 
 ```bash
 react-native run-ios
