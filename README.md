@@ -1,7 +1,7 @@
 # Airbnb React Native clone
 
 <p align="center" style="position: relative;">
-      <img src="./documentation/iphone-frame.png" alt="iphone-frame" />
+      <!-- <img src="./documentation/iphone-frame.png" alt="iphone-frame" /> -->
       <img
         src="./documentation/demo.gif"
         alt="iphone-frame"
